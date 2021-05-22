@@ -5,11 +5,13 @@ public class Persona {
 	private String nombre;
 	private int edad;
 	private Casa casa;
+	private int[] nums;
 
-	public Persona(String nombre, int edad, Casa casa) {
+	public Persona(String nombre, int edad, Casa casa, int[] nums) {
 		this.setNombre(nombre);
 		this.setEdad(edad);
 		this.setCasa(casa);
+		this.nums = nums;
 	}
 
 	public String getNombre() {
@@ -34,6 +36,14 @@ public class Persona {
 
 	public void setCasa(Casa casa) {
 		this.casa = casa;
+	}
+
+	public int[] getNums() {
+		return nums;
+	}
+
+	public void setNums(int[] nums) {
+		this.nums = nums;
 	}
 
 	@Override

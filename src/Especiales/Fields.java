@@ -13,7 +13,8 @@ import java.lang.reflect.Field;
 public class Fields {
 
 	public static void main(String[] args) {
-		Persona p = new Persona("Sergio", 22, new Casa("Madrid", 12500, new Ciudad(28000)));
+		int[] nums = { 1, 2, 3, 4 };
+		Persona p = new Persona("Sergio", 22, new Casa("Madrid", 12500, new Ciudad(28000)), nums);
 		System.out.println(p.toString());
 	}
 
@@ -26,19 +27,30 @@ public class Fields {
 			boolean accesible = atributos[i].isAccessible();
 			atributos[i].setAccessible(true);
 
+			result += ", ";
+
 			try {
+
 				if (atributos[i].getType().isPrimitive()
 						|| atributos[i].get(obj).getClass().getName().equals("java.lang.String"))
 					// Información de variables primitivas y Strings.
-					result += ", " + atributos[i].get(obj).getClass().getSimpleName() + " " + atributos[i].getName()
-							+ ": " + atributos[i].get(obj);
+					result += atributos[i].get(obj).getClass().getSimpleName() + " " + atributos[i].getName() + ": "
+							+ atributos[i].get(obj);
+
+				else if (atributos[i].getType().isArray())
+					// En los vectores, solo mencionamos el tipo y no el contenido de los elementos.
+					result += atributos[i].get(obj).getClass().getSimpleName() + " " + atributos[i].getName();
+
 				else if (!fullInformation)
 					// Solo información de nombres de clases asociadas.
-					result += ", [" + atributos[i].get(obj).getClass().getSimpleName() + " " + atributos[i].getName()
+					result += "[" + atributos[i].get(obj).getClass().getSimpleName() + " " + atributos[i].getName()
 							+ "]";
+
 				else if (fullInformation)
 					// Obtención recursiva de la información completa de las clases asociadas.
-					result += ", " + atributos[i].get(obj).toString() /* toString(atributos[i].get(obj), true) */;
+					// No contempla los Arrays.
+					result += atributos[i].get(obj).toString();
+
 			} catch (IllegalArgumentException | IllegalAccessException exc) {
 				// Catch preventivo. Nunca debería producirse, gracias al setAccessible(true).
 				exc.printStackTrace();
@@ -47,7 +59,9 @@ public class Fields {
 			atributos[i].setAccessible(accesible);
 
 		}
+
 		result += "]";
+
 		return result;
 	}
 
