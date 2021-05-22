@@ -1,2 +1,3 @@
 # Math
-ColecciÃ³n de atajos matemÃ¡ticos.
+Colección de atajos.
+Sergio Jiménez Roncero.

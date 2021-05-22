@@ -1,3 +1,4 @@
+package BaseN;
 
 public class Binario {
 
